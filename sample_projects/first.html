@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Front Text Button (DOM)</title>
+  <style>
+    /* Basic styling so it looks nice on all screens */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: linear-gradient(180deg,#f8fbff,#e6f0ff);
+      color: #0b1220;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 18px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(10,15,30,0.08);
+    }
+
+    /* The "front area" where new texts will appear at top */
+    #frontArea {
+      min-height: 80px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #f1f7ff;
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+
+    input[type="text"] {
+      flex:1;
+      padding: 8px 10px;
+      border:1px solid #d0d7e6;
+      border-radius:6px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 9px 14px;
+      border-radius:6px;
+      border:none;
+      cursor:pointer;
+      background: #2563eb;
+      color:white;
+      font-weight:600;
+    }
+
+    button:hover { transform: translateY(-2px); }
+
+    /* style for each created message */
+    .message {
+      background: linear-gradient(90deg,#fff,#f7fbff);
+      padding:8px 10px;
+      margin:6px 0;
+      border-radius:6px;
+      border:1px solid #e1e8ff;
+      font-size: 15px;
+    }
+
+    /* small responsive tweak */
+    @media (max-width:520px){
+      .controls{ flex-direction: column; }
+      button{ width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>DOM: Add Text to Front</h2>
+
+    <!-- FRONT AREA: new text nodes will appear at the top of this box -->
+    <div id="frontArea">
+      <!-- existing content stays here; new messages will be inserted at the top -->
+      <div class="message">This is an existing message.</div>
+    </div>
+
+    <!-- Controls: text input + button -->
+    <div class="controls">
+      <input id="textInput" type="text" placeholder="Type text to add at front (e.g. Hello!)" />
+      <button id="addFrontBtn">Add to Front</button>
+    </div>
+
+    <p style="color:#475569; font-size:14px">
+      Tip: leave the input empty to add a default message.
+    </p>
+  </div>
+
+  <script>
+    // Select elements
+    const frontArea = document.getElementById('frontArea'); // container at top
+    const addFrontBtn = document.getElementById('addFrontBtn'); // button
+    const textInput = document.getElementById('textInput'); // input field
+
+    // When button clicked, create a new message and insert it at the FRONT (top)
+    addFrontBtn.addEventListener('click', function () {
+      // Get trimmed text from input, use fallback if empty
+      const userText = textInput.value.trim();
+      const textToAdd = userText === '' ? '✨ You added a new message!' : userText;
+
+      // Create a new div element (message)
+      const newMsg = document.createElement('div'); // create element
+      newMsg.className = 'message';                   // add CSS class
+      newMsg.innerText = textToAdd;                   // set its visible text
+
+      // Insert at the front: use prepend (adds as first child)
+      frontArea.prepend(newMsg); // frontArea.insertBefore(newMsg, frontArea.firstChild) alternatively
+
+      // Optional: clear the input and focus it for quick next typing
+      textInput.value = '';
+      textInput.focus();
+    });
+
+    // Bonus: allow pressing Enter in input to add (user-friendly)
+    textInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        addFrontBtn.click(); // trigger click handler
+      }
+    });
+  </script>
+</body>
+</html>
