@@ -11,12 +11,14 @@ const user={
 
 app.post("/api/login" , (req ,res)=>{
     const{username, password} = req.body;
+    console.log(username , password)
     if(username === user.username && password === password.user.password){
         const token = jwt.sign({username}, SECRET , { expiresIn : '1h'});
+        console.log(token);
 
         return res.status(200).json({
             msg : "Login successful",
-            token
+            token  : token
         })
     }
 
@@ -27,7 +29,7 @@ app.post("/api/login" , (req ,res)=>{
 
 
 
-function authenicateToken(req , res, nex){
+function authenicateToken(req , res, next){
     const authHeader = res.headers["authorization"];
     if(!authHeader){
         return res.status(403).json({

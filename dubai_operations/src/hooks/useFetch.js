@@ -1,5 +1,19 @@
-async function fetchdata() {
-    let res = await fetch(`https://jsonplaceholder.typicode.com`)
-    let data = await res.json()
-    console.log(data);
-} 
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+function useFetch(url){
+    const [data , setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error , setError] = useState("");
+
+
+    useEffect(()=>{
+        setLoading(true);
+        axios.get(url)
+        .then((res)=>setData(res.data))
+        .catch(()=> setError("Something went wrong"))
+        .finally(()=>setLoading(false));
+    },[url]);
+    return { data , loading , error}
+}
+export default useFetch

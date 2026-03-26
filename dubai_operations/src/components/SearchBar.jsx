@@ -1,8 +1,17 @@
 import React from 'react'
 
-function SearchBar() {
+function SearchBar({search , setSearch}) {
+    
   return (
-    <div>SearchBar</div>
+    <div>
+        <input 
+        type="text"
+        placeholder='Search...'
+        value={search}
+        onChange={(e)=>setSearch(e.target.value)}
+        style={{padding: "8px" , width: "200px"}}
+        />
+    </div>
   )
 }
 

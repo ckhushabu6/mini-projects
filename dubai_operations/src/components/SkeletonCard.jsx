@@ -2,7 +2,16 @@ import React from 'react'
 
 function SkeletonCard() {
   return (
-    <div>SkeletonCard</div>
+    <div
+    style={{
+        background: "#eee",
+        height: "100px",
+        borderRadius : "10px",
+        animation : "pulse 1.5s infinite"
+    }}
+    >
+        
+    </div>
   )
 }
 
