@@ -1,0 +1,85 @@
+.balanceCard {
+  padding: 24px;
+
+  background: var(--gradient-primary);
+
+  color: white;
+}
+
+.balanceTitle {
+  opacity: 0.8;
+
+  font-size: var(--font-size-sm);
+}
+
+.balanceAmount {
+  margin-top: 10px;
+
+  font-size: 2.4rem;
+
+  font-weight: var(--font-weight-bold);
+}
+
+.balanceFooter {
+  margin-top: 10px;
+
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.summaryGrid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px;
+}
+
+.summaryAmount {
+  margin-top: 10px;
+
+  font-size: var(--font-size-xl);
+
+  font-weight: var(--font-weight-bold);
+}
+
+.analyticsBanner {
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(255, 255, 255, 0.14),
+      transparent 40%
+    ),
+    var(--gradient-card);
+
+  padding: 22px;
+}
+
+.analyticsTitle {
+  margin-bottom: 10px;
+
+  color: var(--color-text);
+}
+
+.analyticsText {
+  margin-bottom: 20px;
+
+  line-height: 1.6;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 16px;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+
+  color: var(--color-text);
+}

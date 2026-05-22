@@ -1,82 +1,69 @@
-import {
-  HiHome,
-  HiOutlineHome,
-  HiChartPie,
-  HiOutlineChartPie,
-} from 'react-icons/hi';
-
-import {
-  MdAddCircle,
-  MdOutlineAddCircle,
-} from 'react-icons/md';
-
-import {
-  RiExchangeDollarLine,
-  RiExchangeDollarFill,
-} from 'react-icons/ri';
-
 import { NavLink } from 'react-router-dom';
+
+import {
+  FaHome,
+  FaChartPie,
+  FaPlus,
+  FaList,
+} from 'react-icons/fa';
 
 import styles from './BottomNavigation.module.css';
 
 function BottomNavigation() {
-  const navItems = [
-    {
-      path: '/',
-      label: 'Home',
-      activeIcon: <HiHome />,
-      inactiveIcon: <HiOutlineHome />,
-    },
-
-    {
-      path: '/transactions',
-      label: 'Transactions',
-      activeIcon: <RiExchangeDollarFill />,
-      inactiveIcon: <RiExchangeDollarLine />,
-    },
-
-    {
-      path: '/add-transaction',
-      label: 'Add',
-      activeIcon: <MdAddCircle />,
-      inactiveIcon: <MdOutlineAddCircle />,
-    },
-
-    {
-      path: '/analytics',
-      label: 'Analytics',
-      activeIcon: <HiChartPie />,
-      inactiveIcon: <HiOutlineChartPie />,
-    },
-  ];
-
   return (
-    <nav className={styles.navigation}>
-      {navItems.map((item) => (
-        <NavLink
-          key={item.path}
-          to={item.path}
-          className={({ isActive }) =>
+    <nav className={styles.nav}>
+      <NavLink
+        to="/"
+        end
+        className={({ isActive }) =>
+          `${styles.link} ${
             isActive
-              ? `${styles.navItem} ${styles.active}`
-              : styles.navItem
-          }
-        >
-          {({ isActive }) => (
-            <>
-              <span className={styles.icon}>
-                {isActive
-                  ? item.activeIcon
-                  : item.inactiveIcon}
-              </span>
+              ? styles.active
+              : ''
+          }`
+        }
+      >
+        <FaHome />
+      </NavLink>
 
-              <span className={styles.label}>
-                {item.label}
-              </span>
-            </>
-          )}
-        </NavLink>
-      ))}
+      <NavLink
+        to="/transactions"
+        className={({ isActive }) =>
+          `${styles.link} ${
+            isActive
+              ? styles.active
+              : ''
+          }`
+        }
+      >
+        <FaList />
+      </NavLink>
+
+      <NavLink
+        to="/add"
+        className={({ isActive }) =>
+          `${styles.link} ${
+            isActive
+              ? styles.active
+              : ''
+          }`
+        }
+      >
+        <FaPlus />
+      </NavLink>
+
+      <NavLink
+        to="/analytics"
+        className={({ isActive }) =>
+          `${styles.link} ${
+            isActive
+              ? styles.active
+              : ''
+          }`
+        }
+      >
+        <FaChartPie />
+      </NavLink>
     </nav>
   );
 }

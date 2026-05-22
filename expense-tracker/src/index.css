@@ -549,3 +549,87 @@ ol {
     --container-width: 900px;
   }
 }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.page-animation {
+  animation: fadeInUp 0.4s ease;
+}
+
+.hover-lift {
+  transition:
+    transform
+      var(--transition-normal),
+    box-shadow
+      var(--transition-normal);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-lg);
+}
+
+.glass-effect {
+  backdrop-filter: blur(14px);
+
+  -webkit-backdrop-filter: blur(
+    14px
+  );
+}
+input,
+textarea,
+button,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid
+    rgba(99, 102, 241, 0.4);
+
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+
+  display: block;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 15px;
+  }
+}

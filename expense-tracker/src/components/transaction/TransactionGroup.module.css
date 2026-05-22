@@ -1,0 +1,12 @@
+.group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.title {
+  color: var(--color-text);
+
+  font-size: var(--font-size-lg);
+}

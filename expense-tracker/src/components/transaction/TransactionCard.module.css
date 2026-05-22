@@ -1,0 +1,25 @@
+.card {
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.editButton:hover {
+  background: rgba(
+    99,
+    102,
+    241,
+    0.25
+  );
+}
+
+.deleteButton:hover {
+  background: rgba(
+    239,
+    68,
+    68,
+    0.25
+  );
+}

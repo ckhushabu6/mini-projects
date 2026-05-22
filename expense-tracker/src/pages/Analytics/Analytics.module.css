@@ -1,0 +1,74 @@
+.statsGrid {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 16px;
+}
+
+.statCard {
+  text-align: center;
+}
+
+.statValue {
+  margin-top: 10px;
+
+  font-size: var(--font-size-2xl);
+
+  font-weight: var(
+    --font-weight-bold
+  );
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+.sectionTitle {
+  font-size: var(--font-size-lg);
+
+  color: var(--color-text);
+}
+
+.breakdownList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.breakdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px;
+
+  border-radius: var(--radius-lg);
+
+  background: var(--color-surface);
+}
+
+.breakdownLeft {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.categoryName {
+  color: var(--color-text);
+
+  font-weight: var(
+    --font-weight-medium
+  );
+}
+
+.categoryPercentage {
+  font-size: var(--font-size-sm);
+
+  color: var(--color-text-secondary);
+}
