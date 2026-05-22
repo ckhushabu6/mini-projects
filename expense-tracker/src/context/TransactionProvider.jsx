@@ -1,82 +1,146 @@
-import { useEffect, useMemo, useReducer } from 'react';
+import {
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
+
+import { v4 as uuidv4 } from 'uuid';
 
 import TransactionContext from './TransactionContext';
 
+import { transactionReducer } from './transactionReducer';
+
+import useLocalStorage from '../hooks/useLocalStorage';
+
 import {
-  initialTransactionState,
-  transactionReducer,
-} from './transactionReducer';
+  LOCAL_STORAGE_KEYS,
+  TRANSACTION_ACTIONS,
+} from '../utils/constants';
 
-import { TRANSACTION_ACTIONS } from './transactionActions';
+const initialDummyData = [
+  {
+    id: uuidv4(),
+    title: 'Salary',
+    amount: 50000,
+    type: 'income',
+    category: 'Salary',
+    date: new Date().toISOString(),
+    note: 'Monthly salary',
+  },
 
-import { storageService } from '../services/storage.service';
+  {
+    id: uuidv4(),
+    title: 'Groceries',
+    amount: 2500,
+    type: 'expense',
+    category: 'Food',
+    date: new Date().toISOString(),
+    note: 'Weekly grocery shopping',
+  },
+];
 
-function TransactionProvider({ children }) {
-  const [state, dispatch] = useReducer(
-    transactionReducer,
-    initialTransactionState
+function TransactionProvider({
+  children,
+}) {
+  const [
+    persistedTransactions,
+    setPersistedTransactions,
+  ] = useLocalStorage(
+    LOCAL_STORAGE_KEYS.TRANSACTIONS,
+    initialDummyData
   );
 
-  useEffect(() => {
-    const storedTransactions =
-      storageService.getTransactions();
-
-    dispatch({
-      type: TRANSACTION_ACTIONS.INITIALIZE_TRANSACTIONS,
-      payload: storedTransactions,
-    });
-  }, []);
-
-  useEffect(() => {
-    storageService.saveTransactions(
-      state.transactions
+  const [transactions, dispatch] =
+    useReducer(
+      transactionReducer,
+      persistedTransactions
     );
-  }, [state.transactions]);
 
-  const addTransaction = transaction => {
+  useEffect(() => {
+    setPersistedTransactions(
+      transactions
+    );
+  }, [
+    transactions,
+    setPersistedTransactions,
+  ]);
+
+  const addTransaction = (
+    transactionData
+  ) => {
+    const newTransaction = {
+      id: uuidv4(),
+      ...transactionData,
+    };
+
     dispatch({
-      type: TRANSACTION_ACTIONS.ADD_TRANSACTION,
-      payload: transaction,
+      type:
+        TRANSACTION_ACTIONS.ADD_TRANSACTION,
+      payload: newTransaction,
     });
   };
 
-  const updateTransaction = transaction => {
+  const updateTransaction = (
+    updatedTransaction
+  ) => {
     dispatch({
-      type: TRANSACTION_ACTIONS.UPDATE_TRANSACTION,
-      payload: transaction,
+      type:
+        TRANSACTION_ACTIONS.UPDATE_TRANSACTION,
+      payload: updatedTransaction,
     });
   };
 
-  const deleteTransaction = transactionId => {
+  const deleteTransaction = (id) => {
     dispatch({
-      type: TRANSACTION_ACTIONS.DELETE_TRANSACTION,
-      payload: transactionId,
+      type:
+        TRANSACTION_ACTIONS.DELETE_TRANSACTION,
+      payload: id,
     });
   };
 
-  const clearTransactions = () => {
-    dispatch({
-      type: TRANSACTION_ACTIONS.CLEAR_TRANSACTIONS,
-    });
+  const totals = useMemo(() => {
+    const income = transactions
+      .filter(
+        (transaction) =>
+          transaction.type === 'income'
+      )
+      .reduce(
+        (sum, transaction) =>
+          sum + transaction.amount,
+        0
+      );
+
+    const expense = transactions
+      .filter(
+        (transaction) =>
+          transaction.type === 'expense'
+      )
+      .reduce(
+        (sum, transaction) =>
+          sum + transaction.amount,
+        0
+      );
+
+    return {
+      income,
+      expense,
+      balance: income - expense,
+    };
+  }, [transactions]);
+
+  const value = {
+    transactions,
+    totals,
+
+    addTransaction,
+    updateTransaction,
+    deleteTransaction,
   };
-
-  const value = useMemo(
-    () => ({
-      transactions: state.transactions,
-
-      addTransaction,
-
-      updateTransaction,
-
-      deleteTransaction,
-
-      clearTransactions,
-    }),
-    [state.transactions]
-  );
 
   return (
-    <TransactionContext.Provider value={value}>
+    <TransactionContext.Provider
+      value={value}
+    >
       {children}
     </TransactionContext.Provider>
   );

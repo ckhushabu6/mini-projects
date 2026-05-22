@@ -1,0 +1,14 @@
+export const TRANSACTION_TYPES = {
+  INCOME: 'income',
+  EXPENSE: 'expense',
+};
+
+export const TRANSACTION_ACTIONS = {
+  ADD_TRANSACTION: 'ADD_TRANSACTION',
+  UPDATE_TRANSACTION: 'UPDATE_TRANSACTION',
+  DELETE_TRANSACTION: 'DELETE_TRANSACTION',
+};
+
+export const LOCAL_STORAGE_KEYS = {
+  TRANSACTIONS: 'expense-tracker-transactions',
+};
